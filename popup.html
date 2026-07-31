@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="mark">◧</span>
+        <span class="name">Split Check</span>
+      </div>
+      <span class="tag">BNPL true-cost</span>
+    </header>
+
+    <div class="lede">Paste or confirm a “pay-in-4” offer. See what it really costs before you split it.</div>
+
+    <!-- Auto-captured purchases awaiting confirmation -->
+    <div id="captureSection" class="capture-section hidden">
+      <div class="capture-head">
+        <span class="capture-title">Detected purchase<span id="captureCount"></span></span>
+        <span class="capture-sub">Review and add to your calendar</span>
+      </div>
+      <div id="captureList" class="capture-list"></div>
+    </div>
+
+    <div class="field">
+      <label for="price">Purchase price</label>
+      <div class="money"><span>$</span><input id="price" type="number" inputmode="decimal" placeholder="150.00" /></div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="payments">Split into</label>
+        <select id="payments">
+          <option value="4" selected>4 payments</option>
+          <option value="3">3 payments</option>
+          <option value="6">6 payments</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="provider">Provider</label>
+        <select id="provider">
+          <option value="generic">Pay-in-4</option>
+          <option value="klarna">Klarna</option>
+          <option value="afterpay">Afterpay</option>
+          <option value="affirm">Affirm</option>
+          <option value="zip">Zip</option>
+          <option value="sezzle">Sezzle</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="missed">If you miss <span id="missedN">0</span> payment(s)</label>
+      <input id="missed" type="range" min="0" max="4" step="1" value="0" />
+    </div>
+
+    <div class="stack">
+      <label class="stack-label">Your BNPL payment calendar</label>
+      <div class="stack-row">
+        <span id="stackSummary" class="stack-summary">No plans saved</span>
+        <div class="stack-actions">
+          <button id="calendarBtn" class="link-btn">Calendar</button>
+          <button id="manageBtn" class="link-btn">Manage</button>
+        </div>
+      </div>
+      <div id="nextCollision" class="next-collision hidden"></div>
+    </div>
+
+    <div id="verdict" class="verdict"></div>
+
+    <div class="breakdown" id="breakdown"></div>
+
+    <footer>
+      <span>Local only · nothing leaves your browser</span>
+      <span>Indicative estimates, not financial advice</span>
+    </footer>
+  </div>
+
+  <!-- Manage-plans drawer -->
+  <div id="drawer" class="drawer hidden">
+    <div class="drawer-head">
+      <span>Your active BNPL plans</span>
+      <button id="closeDrawer" class="link-btn">Done</button>
+    </div>
+    <div id="planList" class="plan-list"></div>
+
+    <div class="add-plan-form">
+      <div class="apf-title">Add a plan</div>
+      <input id="newPlanName" class="apf-name" placeholder="Label — e.g. Afterpay – shoes" />
+      <div class="apf-grid">
+        <div class="apf-field">
+          <label>Order total</label>
+          <div class="money sm"><span>$</span><input id="newPlanAmt" type="number" inputmode="decimal" placeholder="0" /></div>
+        </div>
+        <div class="apf-field">
+          <label>Provider</label>
+          <select id="newPlanProvider">
+            <option value="generic">Pay-in-4</option>
+            <option value="klarna">Klarna</option>
+            <option value="afterpay">Afterpay</option>
+            <option value="affirm">Affirm</option>
+            <option value="zip">Zip</option>
+            <option value="sezzle">Sezzle</option>
+          </select>
+        </div>
+        <div class="apf-field">
+          <label>Split into</label>
+          <select id="newPlanPayments">
+            <option value="4" selected>4 payments</option>
+            <option value="3">3 payments</option>
+            <option value="6">6 payments</option>
+          </select>
+        </div>
+        <div class="apf-field">
+          <label>Next payment due</label>
+          <input id="newPlanFirstDue" type="date" />
+        </div>
+        <div class="apf-field">
+          <label>Payments already made</label>
+          <input id="newPlanPaid" type="number" inputmode="numeric" min="0" placeholder="0" value="0" />
+        </div>
+      </div>
+      <button id="addPlan" class="add-btn wide">Add plan</button>
+    </div>
+    <div class="drawer-note">Stored on this device only. Due dates power your collision calendar — nothing is sent anywhere.</div>
+  </div>
+
+  <!-- Calendar drawer -->
+  <div id="calDrawer" class="drawer hidden">
+    <div class="drawer-head">
+      <span>Payment calendar</span>
+      <button id="closeCal" class="link-btn">Done</button>
+    </div>
+    <div id="calSummary" class="cal-summary"></div>
+    <div id="calBody" class="cal-body"></div>
+    <div class="drawer-note">Every upcoming BNPL payment across your saved plans, merged into one view. Weeks where payments pile up are flagged — that's where plans get missed.</div>
+  </div>
+
+  <script src="bnpl-core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

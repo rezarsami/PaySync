@@ -1,0 +1,51 @@
+/* Injected checkout overlay. Namespaced with sc- and high specificity so host
+   page styles don't bleed in. Fixed bottom-right, unobtrusive. */
+#splitcheck-overlay.sc-overlay {
+  all: initial;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  width: 300px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #ffffff;
+  border: 1px solid #e4e6ea;
+  border-radius: 14px;
+  box-shadow: 0 12px 34px rgba(16,24,40,0.18);
+  overflow: hidden;
+  animation: sc-in .28s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes sc-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+#splitcheck-overlay .sc-head {
+  display: flex; align-items: center; gap: 7px;
+  padding: 11px 13px; border-bottom: 1px solid #eef0f3;
+}
+#splitcheck-overlay .sc-mark { color: #f0553a; font-size: 15px; }
+#splitcheck-overlay .sc-name { font-weight: 700; font-size: 13.5px; color: #16181d; letter-spacing: -0.01em; }
+#splitcheck-overlay .sc-close {
+  margin-left: auto; background: none; border: none; cursor: pointer;
+  font-size: 18px; line-height: 1; color: #9aa2ae; padding: 0 2px;
+}
+#splitcheck-overlay .sc-close:hover { color: #16181d; }
+
+#splitcheck-overlay .sc-body { padding: 12px 13px; }
+#splitcheck-overlay .sc-verdict { font-weight: 700; font-size: 14px; margin-bottom: 4px; letter-spacing: -0.01em; }
+#splitcheck-overlay .sc-reason { font-size: 12px; line-height: 1.5; color: #3a3f47; margin-bottom: 11px; }
+#splitcheck-overlay.sc-warn .sc-verdict { color: #f0553a; }
+#splitcheck-overlay.sc-ok .sc-verdict { color: #12a274; }
+#splitcheck-overlay.sc-neutral .sc-verdict { color: #16181d; }
+#splitcheck-overlay.sc-warn { border-top: 3px solid #f0553a; }
+#splitcheck-overlay.sc-ok { border-top: 3px solid #12a274; }
+
+#splitcheck-overlay .sc-collision { font-size: 11.5px; font-weight: 600; line-height: 1.4; color: #f0553a; background: #fdecea; border-radius: 8px; padding: 8px 9px; margin-bottom: 11px; }
+#splitcheck-overlay .sc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#splitcheck-overlay .sc-stats > div {
+  background: #f4f5f7; border-radius: 9px; padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+#splitcheck-overlay .sc-k { font-size: 10px; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+#splitcheck-overlay .sc-v { font-size: 16px; font-weight: 700; color: #16181d; }
+#splitcheck-overlay .sc-v.sc-hot { color: #f0553a; }
+
+#splitcheck-overlay .sc-foot { padding: 8px 13px; border-top: 1px solid #eef0f3; font-size: 9.5px; color: #9aa2ae; }

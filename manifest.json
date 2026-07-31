@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Split Check — BNPL true-cost checker",
+  "version": "1.0.0",
+  "description": "See what a Buy-Now-Pay-Later offer actually costs — late-fee exposure, effective APR, and plan stacking — right at checkout. All local, no accounts.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Split Check"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "activeTab"],
+  "_note": "storage is used device-only for saved plans + collision calendar; no host/network permissions.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["bnpl-core.js", "content.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
